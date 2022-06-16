@@ -1,14 +1,28 @@
 package com.cangle.hapimity.domain;
 
+/**
+ * @author raorui
+ */
 public class AppUser {
+    /**
+     * 系统用户ID
+     */
     private String id;
-
+    /**
+     * 系统用户昵称
+     */
     private String name;
-
+    /**
+     * 系统用户密码
+     */
     private String password;
-
+    /**
+     * 系统用户邮箱号码
+     */
     private String email;
-
+    /**
+     * 系统用户状态：{1：启用，0：禁用，-1：删除}
+     */
     private Integer status;
 
     public String getId() {

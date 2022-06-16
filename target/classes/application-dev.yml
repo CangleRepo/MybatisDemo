@@ -10,9 +10,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: 0000
+    url: jdbc:mysql://localhost:3306/mybatis?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: "root"
+    password: "0000"
     #添加对druid的支持
     initialSize: 1
     minIdle: 3

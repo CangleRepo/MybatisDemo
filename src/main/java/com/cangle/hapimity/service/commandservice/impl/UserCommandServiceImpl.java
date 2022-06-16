@@ -3,7 +3,6 @@ package com.cangle.hapimity.service.commandservice.impl;
 import com.cangle.common.constant.StatusEnum;
 import com.cangle.hapimity.dao.AppUserMapper;
 import com.cangle.hapimity.domain.AppUser;
-import com.cangle.hapimity.domain.AppUserDO;
 import com.cangle.hapimity.model.application.AddAppUserRequest;
 import com.cangle.hapimity.service.commandservice.UserCommandService;
 import com.cangle.hapimity.utils.ShortCodeGenerator;
@@ -19,7 +18,6 @@ import javax.annotation.Resource;
  */
 @Service
 public class UserCommandServiceImpl implements UserCommandService {
-
     @Resource
     private AppUserMapper appUserMapper;
 
