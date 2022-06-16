@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: happiness-meeting
+  profiles:
+    active: dev
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mapper/**/**/*Mapper.xml
+  typeAliasesPackage: com.shenlan.**.**.domain
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
