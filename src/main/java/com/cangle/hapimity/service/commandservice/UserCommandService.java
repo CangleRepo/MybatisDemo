@@ -1,6 +1,8 @@
 package com.cangle.hapimity.service.commandservice;
 
-import com.cangle.hapimity.model.application.AddAppUserRequest;
+import com.cangle.hapimity.domain.AppUser;
+import com.cangle.hapimity.model.application.user.AddAppUserRequest;
+import com.cangle.hapimity.model.application.user.EditAppUserRequest;
 
 /**
  * @author raorui
@@ -12,4 +14,16 @@ public interface UserCommandService {
      * @param request
      */
     void addAppUser(AddAppUserRequest request);
+
+    /**
+     * 应用删除用户
+     * @param id
+     */
+    void removeAppUser(String id);
+
+    /**
+     * 应用编辑用户
+     * @param request
+     */
+    void editAppUser(EditAppUserRequest request);
 }

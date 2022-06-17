@@ -3,12 +3,14 @@ package com.cangle.hapimity.service.commandservice.impl;
 import com.cangle.common.constant.StatusEnum;
 import com.cangle.hapimity.dao.AppUserMapper;
 import com.cangle.hapimity.domain.AppUser;
-import com.cangle.hapimity.model.application.AddAppUserRequest;
+import com.cangle.hapimity.model.application.user.AddAppUserRequest;
+import com.cangle.hapimity.model.application.user.EditAppUserRequest;
 import com.cangle.hapimity.service.commandservice.UserCommandService;
 import com.cangle.hapimity.utils.ShortCodeGenerator;
 import com.cangle.hapimity.utils.SpringBeanUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 
@@ -29,5 +31,23 @@ public class UserCommandServiceImpl implements UserCommandService {
         appUser.setId(shortCodeGenerator.createId());
         appUser.setStatus(StatusEnum.ENABLE.code);
         appUserMapper.insert(appUser);
+    }
+
+    @Override
+    public void removeAppUser(String id) {
+        AppUser appUser = appUserMapper.selectById(id);
+        if (!ObjectUtils.isEmpty(appUser)) {
+            appUser.setStatus(StatusEnum.DELETE.code);
+            appUserMapper.updateById(appUser);
+        }
+    }
+
+    @Override
+    public void editAppUser(EditAppUserRequest request) {
+        if (!ObjectUtils.isEmpty(request)){
+            AppUser appUser = new AppUser();
+            BeanUtils.copyProperties(request,appUser);
+            appUserMapper.updateById(appUser);
+        }
     }
 }

@@ -6,7 +6,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <delete id="deleteById" parameterType="java.lang.String">
     delete from app_user
@@ -30,6 +30,7 @@
     select id, name, password, email, status
     from app_user
     where id = #{id,jdbcType=VARCHAR}
+    And status != -1
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, password, email, status
