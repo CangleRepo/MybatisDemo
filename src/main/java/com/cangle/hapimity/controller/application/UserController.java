@@ -1,5 +1,6 @@
 package com.cangle.hapimity.controller.application;
 
+import com.cangle.common.exception.ServiceException;
 import com.cangle.common.response.BaseResponse;
 import com.cangle.common.response.ResponseUtils;
 import com.cangle.hapimity.domain.AppUser;
@@ -30,7 +31,7 @@ public class UserController {
 
     @Operation(summary = "新增应用用户")
     @PostMapping(value ="/addAppUser")
-    public BaseResponse<Void> addAppUser(@RequestBody @Validated AddAppUserRequest request){
+    public BaseResponse<Void> addAppUser(@RequestBody @Validated AddAppUserRequest request) throws ServiceException {
         userCommandService.addAppUser(request);
         return ResponseUtils.getSuccessResponse(null);
     }

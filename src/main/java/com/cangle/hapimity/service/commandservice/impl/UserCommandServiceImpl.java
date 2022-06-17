@@ -1,11 +1,15 @@
 package com.cangle.hapimity.service.commandservice.impl;
 
+import com.cangle.common.constant.ResponseEnum;
 import com.cangle.common.constant.StatusEnum;
+import com.cangle.common.exception.ServiceException;
 import com.cangle.hapimity.dao.AppUserMapper;
 import com.cangle.hapimity.domain.AppUser;
 import com.cangle.hapimity.model.application.user.AddAppUserRequest;
 import com.cangle.hapimity.model.application.user.EditAppUserRequest;
 import com.cangle.hapimity.service.commandservice.UserCommandService;
+import com.cangle.hapimity.service.queryservice.UserQueryService;
+import com.cangle.hapimity.service.queryservice.impl.UserQueryServiceImpl;
 import com.cangle.hapimity.utils.ShortCodeGenerator;
 import com.cangle.hapimity.utils.SpringBeanUtils;
 import org.springframework.beans.BeanUtils;
@@ -23,14 +27,22 @@ public class UserCommandServiceImpl implements UserCommandService {
     @Resource
     private AppUserMapper appUserMapper;
 
+    @Resource
+    private UserQueryService userQueryService;
+
     @Override
-    public void addAppUser(AddAppUserRequest request) {
-        AppUser appUser = new AppUser();
-        BeanUtils.copyProperties(request,appUser);
-        ShortCodeGenerator shortCodeGenerator = SpringBeanUtils.getBean(ShortCodeGenerator.class);
-        appUser.setId(shortCodeGenerator.createId());
-        appUser.setStatus(StatusEnum.ENABLE.code);
-        appUserMapper.insert(appUser);
+    public void addAppUser(AddAppUserRequest request) throws ServiceException {
+        if (checkUserName(request.getName())){
+            AppUser appUser = new AppUser();
+            BeanUtils.copyProperties(request,appUser);
+            ShortCodeGenerator shortCodeGenerator = SpringBeanUtils.getBean(ShortCodeGenerator.class);
+            appUser.setId(shortCodeGenerator.createId());
+            appUser.setStatus(StatusEnum.ENABLE.code);
+            appUserMapper.insert(appUser);
+        }
+        else{
+            throw new ServiceException(ResponseEnum.USER_IS_EXIT);
+        }
     }
 
     @Override
@@ -45,9 +57,14 @@ public class UserCommandServiceImpl implements UserCommandService {
     @Override
     public void editAppUser(EditAppUserRequest request) {
         if (!ObjectUtils.isEmpty(request)){
-            AppUser appUser = new AppUser();
+            AppUser appUser = userQueryService.queryAppUserById(request.getId());
             BeanUtils.copyProperties(request,appUser);
             appUserMapper.updateById(appUser);
         }
+    }
+
+    private Boolean checkUserName(String userName){
+        AppUser appUser = appUserMapper.selectByName(userName);
+        return ObjectUtils.isEmpty(appUser);
     }
 }

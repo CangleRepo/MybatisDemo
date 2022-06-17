@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cangle.hapimity.dao.AppQaMapper">
+  <resultMap id="BaseResultMap" type="com.cangle.hapimity.domain.AppQa">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="app_question_id" jdbcType="VARCHAR" property="appQuestionId" />
+    <result column="app_answer_id" jdbcType="VARCHAR" property="appAnswerId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from app_qa
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cangle.hapimity.domain.AppQa">
+    insert into app_qa (id, app_question_id, app_answer_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{appQuestionId,jdbcType=VARCHAR}, #{appAnswerId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cangle.hapimity.domain.AppQa">
+    update app_qa
+    set app_question_id = #{appQuestionId,jdbcType=VARCHAR},
+      app_answer_id = #{appAnswerId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, app_question_id, app_answer_id
+    from app_qa
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, app_question_id, app_answer_id
+    from app_qa
+  </select>
+</mapper>

@@ -1,5 +1,7 @@
 package com.cangle.common.response;
 
+import com.cangle.common.constant.ResponseEnum;
+
 /**
  * @author raorui
  * @date 2022/6/16 14:50

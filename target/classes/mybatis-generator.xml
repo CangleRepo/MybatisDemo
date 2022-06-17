@@ -33,6 +33,6 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         <!-- 所有要生成的表名 -->
-        <table tableName="app_user"></table>
+        <table tableName="app_question"></table>
     </context>
 </generatorConfiguration>
