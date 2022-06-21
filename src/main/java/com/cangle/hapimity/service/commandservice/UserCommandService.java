@@ -13,6 +13,7 @@ public interface UserCommandService {
     /**
      * 应用新增用户
      * @param request
+     * @throws ServiceException
      */
     void addAppUser(AddAppUserRequest request) throws ServiceException;
 

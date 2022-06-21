@@ -5,7 +5,9 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="avatar" jdbcType="TEXT" property="avatar" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="rank" jdbcType="VARCHAR" property="rank" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <delete id="deleteById" parameterType="java.lang.String">
@@ -13,32 +15,37 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.cangle.hapimity.domain.AppUser">
-    insert into app_user (id, name, password, 
-      email, status)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+    insert into app_user (id, name, password, avatar,
+      email, rank, status)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{avatar,jdbcType=TEXT},
+      #{email,jdbcType=VARCHAR},#{rank,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   <update id="updateById" parameterType="com.cangle.hapimity.domain.AppUser">
     update app_user
     set name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=TEXT},
       email = #{email,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
+      And status != -1
   </update>
   <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, name, password, email, status
+    select id, name, password, avatar, email, rank, status
     from app_user
     where id = #{id,jdbcType=VARCHAR}
+      And status != -1
   </select>
   <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, name, password, email, status
+    select id, name, password, avatar, email, rank, status
     from app_user
     where name = #{name,jdbcType=VARCHAR}
       And status != -1
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, name, password, email, status
+    select id, name, password, avatar, email, rank, status
     from app_user
+    where status != -1
   </select>
 </mapper>

@@ -1,9 +1,11 @@
 package com.cangle.hapimity.service.commandservice.impl;
 
 import com.cangle.common.constant.ResponseEnum;
+import com.cangle.common.constant.StatusEnum;
 import com.cangle.common.exception.ServiceException;
 import com.cangle.hapimity.dao.AppQuestionMapper;
 import com.cangle.hapimity.domain.AppQuestion;
+import com.cangle.hapimity.model.application.question.EditQuestionRequest;
 import com.cangle.hapimity.model.application.question.PublishQuestionRequest;
 import com.cangle.hapimity.service.commandservice.QuestionCommandService;
 import com.cangle.hapimity.utils.ShortCodeGenerator;
@@ -32,6 +34,7 @@ public class QuestionCommandServiceImpl implements QuestionCommandService {
             ShortCodeGenerator shortCodeGenerator = SpringBeanUtils.getBean(ShortCodeGenerator.class);
             appQuestion.setId(shortCodeGenerator.createId());
             appQuestion.setStars(0);
+            appQuestion.setStatus(StatusEnum.ENABLE.code);
             appQuestion.setGmtCreate(new Date());
             appQuestion.setGmtUpdate(new Date());
             appQuestionMapper.insert(appQuestion);
@@ -43,6 +46,24 @@ public class QuestionCommandServiceImpl implements QuestionCommandService {
 
     @Override
     public void deleteQuestionById(String id) {
+        AppQuestion appQuestion = appQuestionMapper.selectById(id);
+        if (!ObjectUtils.isEmpty(appQuestion)){
+            appQuestion.setGmtUpdate(new Date());
+            appQuestion.setStatus(StatusEnum.DELETE.code);
+            appQuestionMapper.updateById(appQuestion);
+        }
+    }
 
+    @Override
+    public void editQuestion(EditQuestionRequest request) throws ServiceException {
+        AppQuestion appQuestion = appQuestionMapper.selectById(request.getId());
+        if (!ObjectUtils.isEmpty(appQuestion)){
+            BeanUtils.copyProperties(request,appQuestion);
+            appQuestion.setGmtUpdate(new Date());
+            appQuestionMapper.insert(appQuestion);
+        }
+        else {
+            throw new ServiceException(ResponseEnum.QUESTION_IS_NULL);
+        }
     }
 }

@@ -17,13 +17,37 @@ public class AppUser {
      */
     private String password;
     /**
+     * 系统用户头像
+     */
+    private String avatar;
+    /**
      * 系统用户邮箱号码
      */
     private String email;
     /**
+     * 等级分
+     */
+    private String rank;
+    /**
      * 系统用户状态：{1：启用，0：禁用，-1：删除}
      */
     private Integer status;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
 
     public String getId() {
         return id;

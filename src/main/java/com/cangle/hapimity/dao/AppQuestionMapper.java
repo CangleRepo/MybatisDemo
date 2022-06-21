@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface AppQuestionMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteById(String id);
 
     /**
      * 插入一条问题记录
@@ -24,11 +24,11 @@ public interface AppQuestionMapper {
      */
     int insert(AppQuestion record);
 
-    AppQuestion selectByPrimaryKey(String id);
+    AppQuestion selectById(String id);
 
     List<AppQuestion> selectAll();
 
-    int updateByPrimaryKey(AppQuestion record);
+    int updateById(AppQuestion record);
 
     Page<QueryQuestionPageResponse> selectPageByIdOrKeywords(QueryQuestionPageRequest request);
 }

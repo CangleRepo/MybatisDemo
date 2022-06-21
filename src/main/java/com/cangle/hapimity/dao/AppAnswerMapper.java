@@ -12,13 +12,13 @@ import java.util.List;
 @Repository
 @Mapper
 public interface AppAnswerMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteById(String id);
 
     int insert(AppAnswer record);
 
-    AppAnswer selectByPrimaryKey(String id);
+    AppAnswer selectById(String id);
 
     List<AppAnswer> selectAll();
 
-    int updateByPrimaryKey(AppAnswer record);
+    int updateById(AppAnswer record);
 }

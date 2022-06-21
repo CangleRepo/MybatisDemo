@@ -1,6 +1,7 @@
 package com.cangle.hapimity.service.commandservice;
 
 import com.cangle.common.exception.ServiceException;
+import com.cangle.hapimity.model.application.question.EditQuestionRequest;
 import com.cangle.hapimity.model.application.question.PublishQuestionRequest;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,11 @@ public interface QuestionCommandService {
      * @param id
      */
     void deleteQuestionById(String id);
+
+    /**
+     * 编辑问题
+     * @param request
+     * @throws ServiceException
+     */
+    void editQuestion(EditQuestionRequest request) throws ServiceException;
 }

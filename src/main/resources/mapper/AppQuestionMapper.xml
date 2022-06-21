@@ -7,34 +7,37 @@
     <result column="question" jdbcType="VARCHAR" property="question" />
     <result column="stars" jdbcType="INTEGER" property="stars" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteById" parameterType="java.lang.String">
     delete from app_question
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.cangle.hapimity.domain.AppQuestion">
     insert into app_question (id, question_title, question, 
-      stars, user_id, gmt_create, 
+      stars, user_id, status, gmt_create,
       gmt_update)
     values (#{id,jdbcType=VARCHAR}, #{questionTitle,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
-      #{stars,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{stars,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{gmtCreate,jdbcType=TIMESTAMP},
       #{gmtUpdate,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.cangle.hapimity.domain.AppQuestion">
+  <update id="updateById" parameterType="com.cangle.hapimity.domain.AppQuestion">
     update app_question
     set question_title = #{questionTitle,jdbcType=VARCHAR},
       question = #{question,jdbcType=VARCHAR},
       stars = #{stars,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
+      And status != -1
   </update>
   <select id="selectPageByIdOrKeywords" parameterType="com.cangle.hapimity.model.application.question.QueryQuestionPageResponse"
           resultType="com.cangle.hapimity.model.application.question.QueryQuestionPageResponse">
-    select id, question_title, question, stars, user_id, gmt_create, gmt_update, u.name
+    select id, question_title, question, stars, user_id, status, gmt_create, gmt_update, u.name
     from app_question
     left join app_user as u on user_id = u.user_id
     where
@@ -46,10 +49,12 @@
       or cast(question) like concat('%',#{keywords},'%')
       or cast(u.name) like concat('%',#{keywords},'%')
     </if>
+    And status != -1
     order by gmt_update desc
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, question_title, question, stars, user_id, gmt_create, gmt_update
     from app_question
+      And status != -1
   </select>
 </mapper>

@@ -27,6 +27,9 @@ public class AddAppUserRequest {
     @Size(max = 50)
     private String email;
 
+    @Schema(name = "avatar",description="用户头像")
+    private String avatar;
+
     public String getName() {
         return name;
     }

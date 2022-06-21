@@ -6,37 +6,44 @@
     <result column="answer" jdbcType="VARCHAR" property="answer" />
     <result column="stars" jdbcType="INTEGER" property="stars" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="question_id" jdbcType="VARCHAR" property="questionId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteById" parameterType="java.lang.String">
     delete from app_answer
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.cangle.hapimity.domain.AppAnswer">
     insert into app_answer (id, answer, stars, 
-      user_id, gmt_create, gmt_update
+      user_id, question_id, status, gmt_create, gmt_update
       )
     values (#{id,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{stars,jdbcType=INTEGER}, 
-      #{userId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
+      #{userId,jdbcType=VARCHAR}, #{question_id,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.cangle.hapimity.domain.AppAnswer">
+  <update id="updateById" parameterType="com.cangle.hapimity.domain.AppAnswer">
     update app_answer
     set answer = #{answer,jdbcType=VARCHAR},
       stars = #{stars,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},
+      question_id = #{questionId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, answer, stars, user_id, gmt_create, gmt_update
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, answer, stars, user_id, question_id, status, gmt_create, gmt_update
     from app_answer
     where id = #{id,jdbcType=VARCHAR}
+      And status != -1
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, answer, stars, user_id, gmt_create, gmt_update
+    select id, answer, stars, user_id, question_id, status, gmt_create, gmt_update
     from app_answer
+      And status != -1
   </select>
 </mapper>

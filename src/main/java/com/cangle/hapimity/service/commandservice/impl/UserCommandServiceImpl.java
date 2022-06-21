@@ -32,12 +32,13 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Override
     public void addAppUser(AddAppUserRequest request) throws ServiceException {
-        if (checkUserName(request.getName())){
+        if (checkUserNameUnique(request.getName())){
             AppUser appUser = new AppUser();
             BeanUtils.copyProperties(request,appUser);
             ShortCodeGenerator shortCodeGenerator = SpringBeanUtils.getBean(ShortCodeGenerator.class);
             appUser.setId(shortCodeGenerator.createId());
             appUser.setStatus(StatusEnum.ENABLE.code);
+            appUser.setRank("0");
             appUserMapper.insert(appUser);
         }
         else{
@@ -63,7 +64,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         }
     }
 
-    private Boolean checkUserName(String userName){
+    public Boolean checkUserNameUnique(String userName){
         AppUser appUser = appUserMapper.selectByName(userName);
         return ObjectUtils.isEmpty(appUser);
     }
